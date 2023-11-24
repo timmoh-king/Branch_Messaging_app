@@ -7,7 +7,7 @@ const ChatSpace = ({ socket, agentId, chatId }) => {
   const [chatList, setChatList] = useState([]);
 
   const sendMessage = async() => {
-    if (currentMessage !== '') {
+    if (currentMessage !== "") {
       const currentDate = new Date();
       const messageData = {
         chatId: chatId,
@@ -22,10 +22,18 @@ const ChatSpace = ({ socket, agentId, chatId }) => {
   };
 
   useEffect(() => {
-    socket.on("receive_message", (data) => {
+    const messageHandler = (data) => {
+      console.log("Received message:", data);
       setChatList((list) => [...list, data]);
-    });
+    };
+  
+    socket.on("receive_message", messageHandler);
+  
+    return () => {
+      socket.off("receive_message", messageHandler);
+    };
   }, [socket]);
+  
 
   return (
     <div className='chat-window'>
@@ -34,17 +42,17 @@ const ChatSpace = ({ socket, agentId, chatId }) => {
       </div>
       <div className='chat-body'>
         <ScrollToBottom className='message-container'>
-          {chatList.map((messageData, key) => {
+          {chatList.map((listData, key) => {
             return (
             <div className='message' key={key} 
-              id={agentId === messageData.agentId ? "other" : "you"}>
+              id={agentId === listData.agentId ? "other" : "you"}>
               <div>
                 <div className='message-content'>
-                  <p>{messageData.message}</p>
+                  <p>{listData.message}</p>
                 </div>
                 <div className='message-meta'>
-                  <p id="time">{messageData.time}</p>
-                  <p id="agent">{messageData.agentId}</p>
+                  <p id="time">{listData.time}</p>
+                  <p id="agent">{listData.agentId}</p>
                 </div>
               </div>
             </div>);
