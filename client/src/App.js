@@ -22,8 +22,8 @@ function App() {
       {!showChatSpace ? (
         <div className='joinChatContainer'>
           <h3>Join the chat</h3>
-          <input type='text' placeholder='Enter agentId...' onChange={(e) => {setAgentId(e.target.value)}} />
-          <input type='text' placeholder='Enter chatId...' onChange={(e) => {setChatId(e.target.value)}} />
+          <input type='text' placeholder='Enter agent id...' onChange={(e) => {setAgentId(e.target.value)}} />
+          <input type='text' placeholder='Enter chat id...' onChange={(e) => {setChatId(e.target.value)}} />
           <button onClick={joinChatSpace}>Join the chat</button>
       </div>
       )

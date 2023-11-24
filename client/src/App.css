@@ -20,39 +20,39 @@ body {
 }
 
 .joinChatContainer h3 {
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   margin-bottom: 1rem;
 }
 .joinChatContainer input {
-  width: 210px;
-  height: 40px;
+  width: 230px;
+  height: 32px;
   margin: 7px;
-  border: 2px solid #43a047;
+  border: 1px solid #4fcdff;
   border-radius: 5px;
   padding: 5px;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .joinChatContainer button {
-  width: 225px;
-  height: 50px;
+  width: 242px;
+  height: 38px;
   margin: 7px;
   border: none;
   border-radius: 5px;
   padding: 5px;
   font-size: 16px;
-  background: #43a047;
+  background: #19355e;
   color: #fff;
   cursor: pointer;
 }
 
 .joinChatContainer button:hover {
-  background: #2e7d32;
+  background: #4daf5c;
 }
 
 .chat-window {
-  width: 300px;
-  height: 420px;
+  width: 460px;
+  height: 720px;
 }
 
 .chat-window p {
@@ -61,7 +61,7 @@ body {
 .chat-window .chat-header {
   height: 45px;
   border-radius: 1px;
-  background: #263238;
+  background: #19355e;
   position: relative;
   cursor: pointer;
 }
@@ -74,8 +74,8 @@ body {
 }
 
 .chat-window .chat-body {
-  height: calc(450px - (45px + 70px));
-  border: 1px solid #263238;
+  height: calc(700px - (45px + 70px));
+  border: 1px solid #4fcdff;
   background: #fff;
 
   position: relative;
@@ -101,7 +101,7 @@ body {
   height: auto;
   min-height: 40px;
   max-width: 120px;
-  background-color: #43a047;
+  background-color: #4daf5c;
   border-radius: 5px;
   color: white;
   display: flex;
@@ -133,7 +133,7 @@ body {
 
 #other .message-content {
   justify-content: flex-end;
-  background-color: cornflowerblue;
+  background-color: rgb(65, 110, 195);
 }
 
 #other .message-meta {
@@ -144,6 +144,7 @@ body {
 .message-meta #agent {
   margin-left: 10px;
   font-weight: bold;
+  color: gray;
 }
 
 .chat-window .chat-body .message .message-meta {
@@ -153,7 +154,7 @@ body {
 
 .chat-window .chat-footer {
   height: 40px;
-  border: 1px solid #263238;
+  border: 1px solid #4fcdff;
   border-top: none;
   display: flex;
 }
@@ -164,7 +165,7 @@ body {
   border: 0;
   padding: 0 0.7em;
   font-size: 1em;
-  border-right: 1px dotted #607d8b;
+  border-right: 1px dotted #4fcdff;
 
   outline: none;
   font-family: "Open Sans", sans-serif;
@@ -180,11 +181,11 @@ body {
   background: transparent;
   outline: none;
   font-size: 25px;
-  color: lightgray;
+  color: #19355e;
 }
 
 .chat-window .chat-footer button:hover {
-  color: #43a047;
+  color: rgb(65, 110, 195);
 }
 .hide {
   opacity: 0 !important;

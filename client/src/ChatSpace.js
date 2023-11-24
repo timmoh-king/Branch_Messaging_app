@@ -36,15 +36,18 @@ const ChatSpace = ({ socket, agentId, chatId }) => {
         <ScrollToBottom className='message-container'>
           {chatList.map((messageData, key) => {
             return (
-            <div className='message' key={key} id={agentId === messageData.agentId ? "other" : "you"}>
+            <div className='message' key={key} 
+              id={agentId === messageData.agentId ? "other" : "you"}>
               <div>
-                <div className='message-content'><p>{messageData.message}</p></div>
+                <div className='message-content'>
+                  <p>{messageData.message}</p>
+                </div>
                 <div className='message-meta'>
                   <p id="time">{messageData.time}</p>
                   <p id="agent">{messageData.agentId}</p>
                 </div>
               </div>
-            </div>)
+            </div>);
           })}
         </ScrollToBottom>
       </div>
