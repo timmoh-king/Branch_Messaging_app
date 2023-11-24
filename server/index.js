@@ -21,7 +21,11 @@ io.on('connection', (socket) => {
     socket.on("join_chat", (data) => {
         socket.join(data);
         console.log(`Agent ${socket.id} joined chat ${data}`);
-    })
+    });
+
+    socket.on("send_message", (data) => {
+        socket.to.apply(data.chatId).emit("receive_message", data)
+    });
 
     socket.on('disconnect', () => {
         console.log("Agent disconnected", socket.id);
