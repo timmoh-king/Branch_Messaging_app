@@ -16,10 +16,15 @@ const io = new Server(server, {
 });
 
 io.on('connection', (socket) => {
-    console.log(socket.id);
+    console.log(`User connected ${socket.id}`);
+
+    socket.on("join_chat", (data) => {
+        socket.join(data);
+        console.log(`User ${socket.id} joined chat ${data}`);
+    })
 
     socket.on('disconnect', () => {
-        console.log("user disconnected", socket.id);
+        console.log("User disconnected", socket.id);
     });
 });
 
