@@ -20,7 +20,6 @@ io.on('connection', (socket) => {
 
     socket.on("join_chat", (data) => {
         socket.join(data);
-        console.log(`Agent ${socket.id} joined chat ${data}`);
     });
 
     socket.on("send_message", (data) => {
