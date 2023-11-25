@@ -23,7 +23,6 @@ const ChatSpace = ({ socket, agentId, chatId }) => {
 
   useEffect(() => {
     const messageHandler = (data) => {
-      console.log("Received message:", data);
       setChatList((list) => [...list, data]);
     };
   
@@ -33,7 +32,6 @@ const ChatSpace = ({ socket, agentId, chatId }) => {
       socket.off("receive_message", messageHandler);
     };
   }, [socket]);
-  
 
   return (
     <div className='chat-window'>
