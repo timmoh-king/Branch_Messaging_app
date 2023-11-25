@@ -41,24 +41,34 @@ papaparse.parse(csvFileContent, {
   },
 });
 
+const agentState = {};
+
 io.on('connection', (socket) => {
     console.log(`Agent connected ${socket.id}`);
 
     socket.on("join_chat", (data) => {
         socket.join(data);
         io.to(socket.id).emit('receive_message', getFirstRow(data));
+        agentState[socket.id] = { chatId: data, currentIndex: 0 };
     });
 
-    socket.on("send_message", (data) => {
-        socket.to(data.chatId).emit("receive_message", data);
-        for (let i = 0; i < chatData.length; i++) {
-            
+    socket.on("send_message", () => {
+        const { chatId, currentIndex } = agentState[socket.id];
+        const nextIndex = currentIndex + 1;
+
+        if (nextIndex < chatData.length && chatData[nextIndex].chatId === chatId) {
+            const nextMessage = chatData[nextIndex];
+            io.to(socket.id).emit('receive_message', nextMessage);
+            agentState[socket.id].currentIndex = nextIndex;
+        } else {
+            io.to(socket.id).emit('receive_message', { message: 'Thank you for your time' });
+            socket.on('disconnect', () => { delete agentState[socket.id]; })
         }
-        sendMessagesSequentially(socket, data.chatId);
     });
 
     socket.on('disconnect', () => {
         console.log("Agent disconnected", socket.id);
+        delete agentState[socket.id];
     });
 });
 
@@ -69,22 +79,6 @@ app.get('/getMessages', (req, res) => {
 function getFirstRow(chatId) {
     const dataByChatId = chatData.filter((row) => row.chatId === chatId);
     return dataByChatId[0];
-}
-
-function getChatHistory(chatId) {
-    return chatData.filter((message) => message.chatId === chatId);
-}
-
-function sendMessagesSequentially(socket, chatId) {
-    const delay = 5000;
-
-    const chatHistory = getChatHistory(chatId);
-
-    chatHistory.forEach((message, index) => {
-        setTimeout(() => {
-            io.to(socket.id).emit('receive_message', message);
-        }, index * delay);
-    });
 }
 
 const port = 3005
