@@ -48,18 +48,24 @@ io.on('connection', (socket) => {
 
     socket.on("join_chat", (data) => {
         socket.join(data);
-        io.to(socket.id).emit('receive_message', getFirstRow(data));
-        agentState[socket.id] = { chatId: data, currentIndex: 0 };
+        const chatDataMessages = getRowsByChatId(data);
+        agentState[socket.id] = { chatId: data, chatDataMessages, currentIndex: 0 };
+
+        const getFirstRow = chatDataMessages[0];
+        io.to(socket.id).emit('receive_message', getFirstRow);
     });
 
     socket.on("send_message", () => {
-        const { chatId, currentIndex } = agentState[socket.id];
+        const { chatId, currentIndex, chatDataMessages } = agentState[socket.id];
         const nextIndex = currentIndex + 1;
 
-        if (nextIndex < chatData.length && chatData[nextIndex].chatId === chatId) {
-            const nextMessage = chatData[nextIndex];
-            io.to(socket.id).emit('receive_message', nextMessage);
-            agentState[socket.id].currentIndex = nextIndex;
+        if (nextIndex < chatDataMessages.length && chatDataMessages[nextIndex].chatId === chatId) {
+            const nextMessage = chatDataMessages[nextIndex];
+
+            setTimeout(() => {
+                io.to(socket.id).emit('receive_message', nextMessage);
+                agentState[socket.id].currentIndex = nextIndex;
+            }, 1500);
         } else {
             io.to(socket.id).emit('receive_message', { message: 'Thank you for your time' });
             socket.on('disconnect', () => { delete agentState[socket.id]; })
@@ -76,9 +82,8 @@ app.get('/getMessages', (req, res) => {
     res.json(chatData);
 });
 
-function getFirstRow(chatId) {
-    const dataByChatId = chatData.filter((row) => row.chatId === chatId);
-    return dataByChatId[0];
+function getRowsByChatId(chatId) {
+    return chatData.filter((row) => row.chatId === chatId);
 }
 
 const port = 3005
