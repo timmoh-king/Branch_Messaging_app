@@ -52,7 +52,9 @@ io.on('connection', (socket) => {
         agentState[socket.id] = { chatId: data, chatDataMessages, currentIndex: 0 };
 
         const getFirstRow = chatDataMessages[0];
-        io.to(socket.id).emit('receive_message', getFirstRow);
+        setTimeout(() => {
+            io.to(socket.id).emit('receive_message', getFirstRow);
+        }, 1500);
     });
 
     socket.on("send_message", () => {
