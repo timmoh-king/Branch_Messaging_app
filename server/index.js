@@ -12,7 +12,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: "https://branch-cs-messaging-lumjnlhej-timmoh-king.vercel.app/",
+        origin: "https://branch-messaging-app.vercel.app/",
         methods: ['GET', 'POST'],
     }
 });
